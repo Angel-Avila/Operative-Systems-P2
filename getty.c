@@ -14,14 +14,16 @@
 
 int main(int argc, char *argv[])
 {
-  bool incorrecto = true;
 
-  while(1) {
+  int status;
+
+  while(true) {
 
     FILE * user_passwrd_file = fopen("passwd.txt", "r");
-    int user_password_is_equal = true, status;
+    int user_password_is_equal = true, process;
     char user_passwd_line[101], user[50], password[50], user_password[101];
 
+    // printf("Proceso padre: %d\n\r", getppid());
     printf("Ingrese usuario: ");
     scanf("%s", user);
     printf("Ingrese contraseña: ");
@@ -41,11 +43,22 @@ int main(int argc, char *argv[])
 
     if(user_password_is_equal == false)
     {
-      // incorrecto = false;
+      // exit = false;
       printf("Usuario y/o contraseña correcto.\n");
-      execlp("./sh", "sh.c", NULL);
+      process = fork();
+      if(process == 0)
+      {
+        execlp("./sh", "sh.c", NULL);
+      }
       wait(&status);
-      kill(getpid(), SIGKILL);
+      printf("Status = %d\n", status);
+      if(status > 0)
+      {
+        printf("Matando getty.\n");
+        sleep(1);
+        kill(getpgid(getppid())*(-1), SIGKILL);
+        // kill(getpgid(getpid()), SIGKILL);
+      }
     }
     else
     {

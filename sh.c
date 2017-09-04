@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
+// #include <unistd.h>
 #include <sys/types.h>
 #include <sys/time.h>
 #include <sys/wait.h>
@@ -33,13 +33,12 @@ int main(int argc, char *argv[])
     else if(strcmp(command, "exit") == 0)
     {
       printf("in exit\n\r");
-      kill(0, SIGKILL);
+      exit(0);
     }
     else if(strcmp(command, "shutdown") == 0)
     {
-      // shutdown = true;
       printf("in shutdown\n\r");
-      kill(getpid(), SIGKILL);
+      exit(1);
     }
     else
     {
