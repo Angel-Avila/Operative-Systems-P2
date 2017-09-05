@@ -27,8 +27,8 @@ unsigned hash(char *c) {
 struct dict *search(char *c) {
     struct dict *cl;
 
-    for (cl = command_list[hash(s)]; cl != NULL; cl = cl->next)
-        if (strcmp(s, cl->command) == 0)
+    for (cl = command_list[hash(c)]; cl != NULL; cl = cl->next)
+        if (strcmp(c, cl->command) == 0)
           return cl;
 
     return NULL;
@@ -77,13 +77,12 @@ int main(int argc, char *argv[])
   {
 
     printf("sh > ");
-    scanf("%s", sentence);
+    scanf("%s%*c", sentence);
 
-    int i = 0;
-    while(sentence[i] != '\n' && sentence[i] != ' ' && i < 25) {
-      command[i] = sentence[i];
-      i++;
-    }
+    int index = strstr(sentence, " ") - sentence;
+    strncpy(command, sentence, index);
+
+    printf("\nSentence> %s\nCommand> %s\n", sentence, command);
 
     if(strcmp(command, "export") == 0)
     {
