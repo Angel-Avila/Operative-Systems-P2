@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-// #include <unistd.h>
+#include <unistd.h>
 #include <sys/types.h>
 #include <sys/time.h>
 #include <sys/wait.h>
@@ -111,6 +111,16 @@ int main(int argc, char *argv[])
     else
     {
       printf("in else\n\r");
+
+      char *arguments[] = {"sh", "-c", command, [INSERTE], [ARGUMENTOS], [AQUI], NULL};
+
+      int status, pid = fork();
+
+      if (pid == 0) {
+        execvp("/bin/sh", arguments);
+      }
+
+      wait(&status);
     }
 
   }
