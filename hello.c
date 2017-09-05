@@ -8,8 +8,9 @@
 int main(int argc, char *argv[])
 {
   // char t;
-  // printf("Hola mundo desde %d\n\r", getpid());
+  printf("Hola mundo\n\r");
   // scanf("%s\n", t);
-  // return 0;
-  exit(1);
+	while(1);
+  return 0;
+  
 }

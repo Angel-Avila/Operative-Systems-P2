@@ -78,13 +78,21 @@ int main(int argc, char *argv[])
 
     char *buffer;
     size_t bufsize = 32;
-    size_t characters;
 
     buffer = (char *) malloc(bufsize * sizeof(char));
 
     printf("sh >");
     scanf("%[^ \t\n]", command);
+
     //printf("Command> %s\n", command);
+
+    getline(&buffer, &bufsize, stdin);
+    printf("Command>%s\n", command);
+    printf("Buffer>%s\n", buffer);
+
+    char *args[20] = {0};
+
+    char *token;
 
     if(strcmp(command, "exit") == 0)
     {
@@ -96,18 +104,7 @@ int main(int argc, char *argv[])
       printf("in shutdown\n\r");
       exit(1);
     }
-
-    else {
-
-      getline(&buffer, &bufsize, stdin);
-      printf("Command> %s\n", command);
-      printf("Buffer>  %s\n", buffer);
-
-      char *args[20] = {0};
-
-      char *token;
-
-      if(strcmp(command, "export") == 0)
+    else if(strcmp(command, "export") == 0)
       {
         printf("in export\n\r");
       }
@@ -130,23 +127,24 @@ int main(int argc, char *argv[])
 
         while(token != NULL) {
           args[i] = token;
-          //printf("Token %d> %s\n", i, token);
+          printf("Token %d>%s\n", i, token);
           token = strtok(NULL, " ");
           i++;
         }
+        args[i+1] = NULL;
 
         int status, pid = fork();
 
         if (pid == 0) {
-        //  execvp("/bin/sh", arguments);
+          execvp(command, args);
         }
 
-        //wait(&status);
+        wait(&status);
       }
 
     }
 
 
-  }
+
   return 0;
 }
