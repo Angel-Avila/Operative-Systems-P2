@@ -87,6 +87,11 @@ int main(int argc, char *argv[])
     //printf("Command> %s\n", command);
 
     getline(&buffer, &bufsize, stdin);
+
+    int len = strlen(buffer);
+    if (len > 0 && buffer[len-1] == '\n')
+      buffer[len-1] = 0;
+
     printf("Command>%s\n", command);
     printf("Buffer>%s\n", buffer);
 
@@ -123,7 +128,9 @@ int main(int argc, char *argv[])
         printf("in else\n\r");
 
         token = strtok(buffer, " ");
-        int i = 0;
+        int i = 1;
+
+        args[0] = command;
 
         while(token != NULL) {
           args[i] = token;
@@ -131,6 +138,7 @@ int main(int argc, char *argv[])
           token = strtok(NULL, " ");
           i++;
         }
+        args[1] = "status";
         args[i+1] = NULL;
 
         int status, pid = fork();
