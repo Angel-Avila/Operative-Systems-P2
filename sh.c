@@ -71,13 +71,35 @@ int main(int argc, char *argv[])
 {
 
   bool shutdown = false;
-  char command[25], sentence[100];
+  char command[25];
 
   while(shutdown != true)
   {
 
+    char *buffer;
+    size_t bufsize = 32;
+    size_t characters;
+
+    buffer = (char *) malloc(bufsize * sizeof(char));
+
     printf("sh > ");
-    scanf("%s%*c", command);
+    scanf("%s ", command);
+    getline(&buffer, &bufsize, stdin);
+    printf("Command> %s\n", command);
+    printf("Buffer>  %s\n", buffer);
+
+    char *args[20] = {0};
+
+    char *token;
+
+    token = strtok(buffer, " ");
+    int i = 0;
+
+    while(token != NULL) {
+      printf("Token %d> %s\n", i, token);
+      token = strtok(NULL, " ");
+      i++;
+    }
 
     //nt index = strstr(sentence, " ") - sentence;
     //strncpy(command, sentence, index);
@@ -101,7 +123,7 @@ int main(int argc, char *argv[])
     else if(strcmp(command, "exit") == 0)
     {
       printf("in exit\n\r");
-      exit(0);
+      //exit(0);
     }
     else if(strcmp(command, "shutdown") == 0)
     {
@@ -112,15 +134,15 @@ int main(int argc, char *argv[])
     {
       printf("in else\n\r");
 
-      char *arguments[] = {"sh", "-c", command, [INSERTE], [ARGUMENTOS], [AQUI], NULL};
+      //char *arguments[] = {"sh", "-c", command, [INSERTE], [ARGUMENTOS], [AQUI], NULL};
 
       int status, pid = fork();
 
       if (pid == 0) {
-        execvp("/bin/sh", arguments);
+      //  execvp("/bin/sh", arguments);
       }
 
-      wait(&status);
+      //wait(&status);
     }
 
   }
