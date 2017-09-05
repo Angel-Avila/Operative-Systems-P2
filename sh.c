@@ -112,35 +112,72 @@ int main(int argc, char *argv[])
     else if(strcmp(command, "export") == 0)
       {
         printf("in export\n\r");
+
+        char *token = strtok(buffer, "=");
+        char *variable;
+        char *valor;
+
+        if(token[0] == '$'){
+          token ++;
+          variable = search(token)->value;
+        } else {
+          variable = token;
+          if(variable[0] == ' ')
+            variable ++;
+        }
+
+        token = strtok(NULL, " ");
+
+        if(token[0] == '$'){
+          token ++;
+          valor = search(token)->value;
+        } else {
+          valor = token;
+        }
+
+        define(variable, valor);
       }
       else if(strcmp(command, "echo") == 0)
       {
         printf("in echo\n\r");
 
-        define("Hola", "perrita");
-        char *variable = "Hola";
-        char *valor = search(variable)->value;
-        printf("%s\n", valor);
+        char *token = strtok(buffer, " ");
+        char *variable;
+
+        if(token[0] == '$'){
+          printf("hay algo\n\r");
+          token ++;
+          variable = search(token)->value;
+        }
 
       }
       else
       {
         printf("in else\n\r");
 
+        char *com_ptr = command;
+        char *real_ptr = command;
+
+        if(com_ptr[0] == '$') {
+          com_ptr++;
+          real_ptr = search(com_ptr)->value;
+        }
+
         token = strtok(buffer, " ");
         int i = 1;
 
-        args[0] = command;
+        args[0] = real_ptr;
 
         while(token != NULL) {
-          args[i] = token;
 
-          if(args[i][0] == '$'){
+          if(token[0] == '$'){
             printf("hay algo\n\r");
-            args[i] ++;
+            token ++;
+            args[i] = search(token)->value;
+          } else {
+            args[i] = token;
           }
 
-          printf("Token %d>%s\n", i, token);
           token = strtok(NULL, " ");
           i++;
         }
@@ -149,15 +186,12 @@ int main(int argc, char *argv[])
         int status, pid = fork();
 
         if (pid == 0) {
-          execvp(command, args);
+          execvp(real_ptr, args);
         }
 
         wait(&status);
       }
-
     }
-
-
 
   return 0;
 }
