@@ -134,11 +134,16 @@ int main(int argc, char *argv[])
 
         while(token != NULL) {
           args[i] = token;
+
+          if(args[i][0] == '$'){
+            printf("hay algo\n\r");
+            args[i] ++;
+          }
+
           printf("Token %d>%s\n", i, token);
           token = strtok(NULL, " ");
           i++;
         }
-        args[1] = "status";
         args[i+1] = NULL;
 
         int status, pid = fork();
