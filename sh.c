@@ -82,68 +82,70 @@ int main(int argc, char *argv[])
 
     buffer = (char *) malloc(bufsize * sizeof(char));
 
-    printf("sh > ");
-    scanf("%s ", command);
-    getline(&buffer, &bufsize, stdin);
-    printf("Command> %s\n", command);
-    printf("Buffer>  %s\n", buffer);
+    printf("sh >");
+    scanf("%[^ \t\n]", command);
+    //printf("Command> %s\n", command);
 
-    char *args[20] = {0};
-
-    char *token;
-
-    token = strtok(buffer, " ");
-    int i = 0;
-
-    while(token != NULL) {
-      printf("Token %d> %s\n", i, token);
-      token = strtok(NULL, " ");
-      i++;
-    }
-
-    //nt index = strstr(sentence, " ") - sentence;
-    //strncpy(command, sentence, index);
-
-    //printf("\nSentence> %s\nCommand> %s\n", sentence, command);
-
-    if(strcmp(command, "export") == 0)
-    {
-      printf("in export\n\r");
-    }
-    else if(strcmp(command, "echo") == 0)
-    {
-      printf("in echo\n\r");
-
-      define("Hola", "perrita");
-      char *variable = "Hola";
-      char *valor = search(variable)->value;
-      printf("%s\n", valor);
-
-    }
-    else if(strcmp(command, "exit") == 0)
+    if(strcmp(command, "exit") == 0)
     {
       printf("in exit\n\r");
-      //exit(0);
+      exit(0);
     }
     else if(strcmp(command, "shutdown") == 0)
     {
       printf("in shutdown\n\r");
       exit(1);
     }
-    else
-    {
-      printf("in else\n\r");
 
-      //char *arguments[] = {"sh", "-c", command, [INSERTE], [ARGUMENTOS], [AQUI], NULL};
+    else {
 
-      int status, pid = fork();
+      getline(&buffer, &bufsize, stdin);
+      printf("Command> %s\n", command);
+      printf("Buffer>  %s\n", buffer);
 
-      if (pid == 0) {
-      //  execvp("/bin/sh", arguments);
+      char *args[20] = {0};
+
+      char *token;
+
+      if(strcmp(command, "export") == 0)
+      {
+        printf("in export\n\r");
+      }
+      else if(strcmp(command, "echo") == 0)
+      {
+        printf("in echo\n\r");
+
+        define("Hola", "perrita");
+        char *variable = "Hola";
+        char *valor = search(variable)->value;
+        printf("%s\n", valor);
+
+      }
+      else
+      {
+        printf("in else\n\r");
+
+        token = strtok(buffer, " ");
+        int i = 0;
+
+        while(token != NULL) {
+          args[i] = token;
+          //printf("Token %d> %s\n", i, token);
+          token = strtok(NULL, " ");
+          i++;
+        }
+
+        int status, pid = fork();
+
+        if (pid == 0) {
+        //  execvp("/bin/sh", arguments);
+        }
+
+        //wait(&status);
       }
 
-      //wait(&status);
     }
+
 
   }
   return 0;
