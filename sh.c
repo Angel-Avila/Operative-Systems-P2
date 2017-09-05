@@ -77,12 +77,12 @@ int main(int argc, char *argv[])
   {
 
     printf("sh > ");
-    scanf("%s%*c", sentence);
+    scanf("%s%*c", command);
 
-    int index = strstr(sentence, " ") - sentence;
-    strncpy(command, sentence, index);
+    //nt index = strstr(sentence, " ") - sentence;
+    //strncpy(command, sentence, index);
 
-    printf("\nSentence> %s\nCommand> %s\n", sentence, command);
+    //printf("\nSentence> %s\nCommand> %s\n", sentence, command);
 
     if(strcmp(command, "export") == 0)
     {
@@ -91,6 +91,12 @@ int main(int argc, char *argv[])
     else if(strcmp(command, "echo") == 0)
     {
       printf("in echo\n\r");
+
+      define("Hola", "perrita");
+      char *variable = "Hola";
+      char *valor = search(variable)->value;
+      printf("%s\n", valor);
+
     }
     else if(strcmp(command, "exit") == 0)
     {
