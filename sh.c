@@ -94,8 +94,8 @@ int main(int argc, char *argv[])
     if (len > 0 && buffer[len-1] == '\n')
       buffer[len-1] = 0;
 
-    printf("Command>%s\n", command);
-    printf("Buffer>%s\n", buffer);
+    //printf("Command>%s\n", command);
+    //printf("Buffer>%s\n", buffer);
 
     char *args[20] = {0};
 
@@ -103,17 +103,17 @@ int main(int argc, char *argv[])
 
     if(strcmp(command, "exit") == 0)
     {
-      printf("in exit\n\r");
+      //printf("in exit\n\r");
       exit(0);
     }
     else if(strcmp(command, "shutdown") == 0)
     {
-      printf("in shutdown\n\r");
+      //printf("in shutdown\n\r");
       exit(1);
     }
     else if(strcmp(command, "export") == 0)
       {
-        printf("in export\n\r");
+        //printf("in export\n\r");
 
         char *token = strtok(buffer, "=");
         char *variable;
@@ -141,7 +141,7 @@ int main(int argc, char *argv[])
       }
       else if(strcmp(command, "echo") == 0)
       {
-        printf("in echo\n\r");
+        //printf("in echo\n\r");
 
         char *token = strtok(buffer, " ");
         char *variable;
@@ -156,7 +156,7 @@ int main(int argc, char *argv[])
       }
       else
       {
-        printf("in else\n\r");
+        //printf("in else\n\r");
 
         char *com_ptr = command;
         char *real_ptr = command;
@@ -188,7 +188,7 @@ int main(int argc, char *argv[])
 
         while(token != NULL) {
           if(token[0] == '$'){
-            printf("hay algo %s\n\r", token);
+            //printf("hay algo %s\n\r", token);
             token ++;
             args[i] = search(token)->value;
           } else {
