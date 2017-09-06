@@ -7,7 +7,7 @@
 #include <string.h>
 #include <stdbool.h>
 
-#define NUM_PROCESS 2
+#define NUM_PROCESS 6
 
 int main(int argc, char *argv[])
 {

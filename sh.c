@@ -206,13 +206,14 @@ int main(int argc, char *argv[])
 
         int status, pid = fork();
 
-        if (pid == 0) {
-          execvp(pathCommand, args);
-        }
-
-        if(!background) {
-          wait(&status);
-        }
+        if (pid == 0) 
+          if(execvp(pathCommand, args) == -1)
+		  	exit(EXIT_FAILURE);
+        
+		else
+			if(!background) 
+          		wait(&status);
+        
       }
     }
 
