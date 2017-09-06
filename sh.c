@@ -147,7 +147,7 @@ int main(int argc, char *argv[])
         char *variable;
 
         if(token[0] == '$'){
-          printf("hay algo\n\r");
+          //printf("hay algo\n\r");
           token ++;
           variable = search(token)->value;
           printf("%s\n", variable);
