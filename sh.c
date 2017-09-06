@@ -172,9 +172,13 @@ int main(int argc, char *argv[])
 
         char *pathCommand = (char *)malloc(newsize);
 
-        strcpy(pathCommand, path);
-        strcat(pathCommand, "/");
-        strcat(pathCommand, real_ptr);
+        if(real_ptr[0] != '.' && real_ptr[0] != '/') {
+          strcpy(pathCommand, path);
+          strcat(pathCommand, "/");
+          strcat(pathCommand, real_ptr);
+        } else {
+          strcpy(pathCommand, real_ptr);
+        }
 
         token = strtok(buffer, " ");
         int i = 1;
