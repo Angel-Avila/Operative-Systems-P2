@@ -181,18 +181,22 @@ int main(int argc, char *argv[])
         }
 
         token = strtok(buffer, " ");
+        int background = 0;
         int i = 1;
 
         args[0] = pathCommand;
 
         while(token != NULL) {
-
           if(token[0] == '$'){
-            printf("hay algo\n\r");
+            printf("hay algo %s\n\r", token);
             token ++;
             args[i] = search(token)->value;
           } else {
             args[i] = token;
+          }
+
+          if(token[0] == '&' && i == 1) {
+            background = 1;
           }
 
           token = strtok(NULL, " ");
@@ -206,7 +210,9 @@ int main(int argc, char *argv[])
           execvp(pathCommand, args);
         }
 
-        wait(&status);
+        if(!background) {
+          wait(&status);
+        }
       }
     }
 
