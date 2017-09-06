@@ -73,6 +73,8 @@ int main(int argc, char *argv[])
   bool shutdown = false;
   char command[25];
 
+  define("PATH", "/bin");
+
   while(shutdown != true)
   {
 
@@ -148,6 +150,7 @@ int main(int argc, char *argv[])
           printf("hay algo\n\r");
           token ++;
           variable = search(token)->value;
+          printf("%s\n", variable);
         }
 
       }
@@ -163,10 +166,20 @@ int main(int argc, char *argv[])
           real_ptr = search(com_ptr)->value;
         }
 
+        char *path = search("PATH")->value;
+
+        int newsize = strlen(real_ptr) + strlen(path) + 2;
+
+        char *pathCommand = (char *)malloc(newsize);
+
+        strcpy(pathCommand, path);
+        strcat(pathCommand, "/");
+        strcat(pathCommand, real_ptr);
+
         token = strtok(buffer, " ");
         int i = 1;
 
-        args[0] = real_ptr;
+        args[0] = pathCommand;
 
         while(token != NULL) {
 
@@ -186,7 +199,7 @@ int main(int argc, char *argv[])
         int status, pid = fork();
 
         if (pid == 0) {
-          execvp(real_ptr, args);
+          execvp(pathCommand, args);
         }
 
         wait(&status);
