@@ -10,7 +10,7 @@ int main(int argc, char *argv[])
   // char t;
   printf("Hola mundo\n\r");
   // scanf("%s\n", t);
-	while(1);
+	// while(1);
   return 0;
-  
+
 }
